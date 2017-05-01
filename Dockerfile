@@ -8,3 +8,4 @@ USER root
 RUN chown -R kenobi:kenobi /home/kenobi/OSSonAzure
 WORKDIR /home/kenobi/OSSonAzure
 USER kenobi
+CMD bash ./bash_scripts/02-deploy-jumpbox.new.sh

@@ -28,19 +28,55 @@ sudo chmod +x ./OSSonAzure/1-build-environment.sh
 
 ## Deploy with Docker
 
+All versions below will run a docker container with all tools necessary already installed.  It will  
+
+### Prerequisites
+
+1. Docker engine installed for your OS
+-- [Windows](https://store.docker.com/editions/community/docker-ce-desktop-windows)
+-- [MacOS](https://store.docker.com/editions/community/docker-ce-desktop-mac)
+-- Linux
+--- [Centos](https://store.docker.com/editions/community/docker-ce-server-centos)
+--- [Ubunut](https://store.docker.com/editions/community/docker-ce-server-ubuntu)
+
+1. Create/Identify the folder where you'd like to save the ssh-keys to your local computer.  In otherwords, we'll be mounting a folder from your local computer into the container, where your ssh-keys will be saved and be available for use outside of your container.
+
+1. That's it.
+
+### From fresh local build
+
+You can build a fresh version from the GitHub repo (dansand71/OSSonAzure).
+
 ```:bash
+# Clone github repo
+git clone https://github.com/dansand71/OSSonAzure
+
+# Change directory into new repo
+cd OSSonAzure
+
 # Build the docker image locally
 docker build -t ossdemo .
 
 # Run the new docker container
-docker run -it ossdemo 
+docker run -it ossdemo -v <local_asbsolute_path_to_store_ssh_keys>:/home/kenobi/.ssh
 
-# Inside the docker container run the Jumpbox deploy script
-bash ./bash_scripts/02-deploy-jumpbox.new.sh
+# Follow the prompts.  The Bash script (bash ./bash_scripts/02-deploy-jumpbox.new.sh) runs automatically
 
 # Profit
 ```
 
+### From docker hub hosted image (no local build necessary)
+
+You also have the option to run directly from a prebuilt image.
+
+```:bash
+# Download and run the image hosted on docker hub
+docker run -it raykao/centos_jumpbox -v <local_asbsolute_path_to_store_ssh_keys>:/home/kenobi/.ssh
+
+# Follow the prompts.  The Bash script (bash ./bash_scripts/02-deploy-jumpbox.new.sh) runs automatically
+
+# Profit
+```
 
 The script installs / updates:
 - Updates YUM / APT-GET

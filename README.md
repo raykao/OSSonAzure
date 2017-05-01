@@ -37,7 +37,7 @@ All versions below will run a docker container with all tools necessary already 
 -- [MacOS](https://store.docker.com/editions/community/docker-ce-desktop-mac)
 -- Linux
 --- [Centos](https://store.docker.com/editions/community/docker-ce-server-centos)
---- [Ubunut](https://store.docker.com/editions/community/docker-ce-server-ubuntu)
+--- [Ubunutu](https://store.docker.com/editions/community/docker-ce-server-ubuntu)
 
 1. Create/Identify the folder where you'd like to save the ssh-keys to your local computer.  In otherwords, we'll be mounting a folder from your local computer into the container, where your ssh-keys will be saved and be available for use outside of your container.
 
@@ -76,6 +76,33 @@ docker run -it raykao/centos_jumpbox -v <local_asbsolute_path_to_store_ssh_keys>
 # Follow the prompts.  The Bash script (bash ./bash_scripts/02-deploy-jumpbox.new.sh) runs automatically
 
 # Profit
+```
+
+### How to start a stopped docker container
+
+In case you need to start up a previous container again, to grab some data off of it, you can run the following commands:
+
+```:bash
+
+#list all docker containers (running or stopped)
+docker ps -a
+
+# Results
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                           PORTS               NAMES
+e1aae3a6b246        ossdemo             "/bin/sh -c 'bash ..."   15 minutes ago      Exited (130) 3 seconds ago                           adoring_cori
+27f7c0743fb4        ossdemo             "/bin/sh -c 'bash ..."   About an hour ago   Exited (130) About an hour ago                       jovial_golick
+23f1bd6857ce        ossdemo             "-v /Users/raykao/..."   About an hour ago   Created                                              eloquent_boyd
+c40a59931053        ossdemo             "/bin/sh -c 'bash ..."   4 hours ago         Exited (130) 3 hours ago
+
+# Based on the timestamp or known last container that you ran - you can locate the container ID. Usually the first 2-4 are enough to identify and use the container again.
+# e.g e1a for container e1aae3a6b246
+
+# start a stopped container
+
+docker start -t e1a
+
+# you're now back in the previously stopped container with all the data it created
+
 ```
 
 The script installs / updates:

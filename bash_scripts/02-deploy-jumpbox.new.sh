@@ -182,4 +182,5 @@ jq ".ansible_user = \"${JUMPBOX_ADMIN_NAME}\" \
     | .ansible_ssh_private_key_file = \"${ssh_private_key_fullpath}\"" \
     ./ansible/host_vars/example > ./ansible/host_vars/${JUMPBOX_FQDN}.json
 
+### Run ansible and deploy playbook - note we're passing in the admin user's password so we can run sudo commands
 ansible-playbook -i $ANSIBLE_HOSTS_FILE ansible/jumpbox.yml --extra-vars="ansible_sudo_pass=${JUMPBOX_ADMIN_PASSWORD}"
